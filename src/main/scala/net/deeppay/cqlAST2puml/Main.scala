@@ -25,7 +25,7 @@ object Main extends App {
 
     // TODO use scopt here.
     if (args.length == 0) {
-      print("CQLAST2puml <input file.cql> <outputfile.puml>")
+      usage()
     } else {
       val inputFilename : String = args(0)
       val outputFilename : String = if (args.length > 1) {
@@ -52,4 +52,7 @@ object Main extends App {
     }
   }
 
+  private def usage() = {
+    println("CQLAST2puml <input file.cql> <outputfile.puml>")
+  }
 }
