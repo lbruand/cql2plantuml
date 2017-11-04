@@ -2,7 +2,7 @@ CQL2Plantuml
 ============
 
 
-Turn any CQL schema into a graphical representation.
+Turn any CQL ( [Cassandra](http://cassandra.apache.org/)) schema into a graphical representation.
 
 A small scala tool to transform a schema to a [plantuml](http://plantuml.com/) puml file that can be in turn transformed into a graphical representation of your CQL schema.
 
