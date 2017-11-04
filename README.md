@@ -14,6 +14,19 @@ Gallery
 
 ![system auth](examples/system_auth/system_auth.png)
 
+Downloads
+=========
+
+Download a jar file from [release](https://github.com/lbruand/cql2plantuml/releases).
+
+run the jar file using :
+
+```
+java -jar cql2plantuml-assembly-1.0.jar <input file.cql>
+```
+
+
+
 Derivative work warning
 =======================
 
