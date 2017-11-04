@@ -7,6 +7,13 @@ Turn any CQL schema into a graphical representation.
 A small scala tool to transform a schema to a plantuml puml file that can be in turn transformed into a graphical representation of your CQL schema.
 
 
+Gallery
+=======
+
+## System auth from Cassandra
+
+![system auth](examples/system_auth/system_auth.png)
+
 Derivative work warning
 =======================
 
