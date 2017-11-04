@@ -1,0 +1,56 @@
+
+@startuml
+' uncomment the line below if you're using computer with a retina display
+' skinparam dpi 300
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define UDT(name,desc) class name as "desc" << (U,#AAFFAA) >>
+' we use bold for primary key
+' green color for unique
+' and underscore for not_null
+!define primary_key(x) <b>x</b>
+!define partition_key(x) <b>x</b>
+!define clustering_key(x) <i>x</i>
+!define primary_key(x) <b>x</b>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <u>x</u>
+' other tags available:
+' <i></i>
+' <back:COLOR></color>, where color is a color name or html color code
+' (#FFAACC)
+' see: http://plantuml.com/classes.html#More
+hide methods
+hide stereotypes
+
+' entities
+
+package "system_auth" {
+Table(role_permissions, "role_permissions") {
+  partition_key(role : Text)
+  clustering_key(resource : Text)
+  ---
+  permissions : set<Text>
+}
+
+Table(role_members, "role_members") {
+  partition_key(role : Text)
+  clustering_key(member : Text)
+  ---
+}
+
+Table(roles, "roles") {
+  partition_key(role : Text)
+  can_login : Boolean
+  is_superuser : Boolean
+  member_of : set<Text>
+  salted_hash : Text
+}
+
+
+
+}
+
+roles o-- role_permissions
+roles o-- role_members
+
+@enduml
+              
