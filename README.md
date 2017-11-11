@@ -31,7 +31,7 @@ You can edit it to add links.
 You can then run plantuml to obtain a .png or .svg file:
 
 ```
-plantuml -T <input file.puml>
+plantuml -Tpng <input file.puml>
 ```
 
 
