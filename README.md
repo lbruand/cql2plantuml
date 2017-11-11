@@ -30,7 +30,7 @@ java -jar cql2plantuml-assembly-1.0.jar <input file.cql>
 Derivative work warning
 =======================
 
-This work includes classes (CQL AST Parser) originally written by Tamer AbdulRadi distributed under the Apache Licence 2.0 at (https://github.com/schemasafe/troy). These classes where then modified.
+This work includes classes (CQL AST Parser) originally written by Tamer AbdulRadi distributed under the Apache Licence 2.0 at (https://github.com/schemasafe/troy). These classes were then modified.
 
 
 
