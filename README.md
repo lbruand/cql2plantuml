@@ -25,6 +25,14 @@ run the jar file using :
 java -jar cql2plantuml-assembly-1.0.jar <input file.cql>
 ```
 
+This creates a .puml file from your input cql file.
+This .puml file does not contain any link.
+You can edit it to add links.
+You can then run plantuml to obtain a .png or .svg file:
+
+```
+plantuml -T <input file.puml>
+```
 
 
 Derivative work warning
