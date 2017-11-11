@@ -19,19 +19,26 @@ Downloads
 
 Download a jar file from [release](https://github.com/lbruand/cql2plantuml/releases).
 
+get a CQL schema from C* keyspace _test_ :
+
+```
+cqlsh -e 'describe keyspace test;' > test.cql
+```
+
 run the jar file using :
 
 ```
-java -jar cql2plantuml-assembly-1.0.jar <input file.cql>
+java -jar cql2plantuml-assembly-1.0.jar test.cql
 ```
 
-This creates a .puml file from your input cql file.
+This creates a *test.puml* file from your input *test.cql* file.
 This .puml file does not contain any link.
 You can edit it to add links.
-You can then run plantuml to obtain a .png or .svg file:
+You can then run [plantuml](http://plantuml.com/) to obtain a .png or .svg file:
 
 ```
-plantuml -Tpng <input file.puml>
+plantuml -Tpng test.puml
+plantuml -Tsvg test.puml
 ```
 
 
