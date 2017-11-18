@@ -14,6 +14,8 @@ Gallery
 
 ![system auth](examples/system_auth/system_auth.png)
 
+NB : Because the CQL Schema does not contain any relation between tables, it is up to you to define the relations in the plantuml file.
+
 Downloads
 =========
 
