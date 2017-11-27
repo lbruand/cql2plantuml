@@ -72,7 +72,7 @@ object CQLSchemaParser extends JavaTokenParsers with Helpers {
   }
 
   // Ignores comments
-  protected override val whiteSpace = """(\s|//.*|--.*|(?m)/\*(\*(?!/)|[^*])*\*/)+""".r
+  protected override val whiteSpace = """(\s|//[^!].*|--.*|(?m)/\*(\*(?!/)|[^*])*\*/)+""".r
 
   def identifier: Parser[Identifier] = "[a-zA-Z0-9_]+".r.filter(k => !Keywords.contains(k.toUpperCase))
 
@@ -306,6 +306,10 @@ object CQLSchemaParser extends JavaTokenParsers with Helpers {
       fields ^^^^ CreateType.apply
   }
 
+  def createPassThruComment: Parser[PassThruComment] = {
+    "//!" ~> ".*".r ^^ PassThruComment.apply
+  }
+
   def createIndex: Parser[CreateIndex] = {
     def indexName = identifier.?
     def onTable = "ON".i ~> tableName
@@ -356,7 +360,7 @@ object CQLSchemaParser extends JavaTokenParsers with Helpers {
   }
 
   def dataDefinition: Parser[DataDefinition] =
-    createKeyspace | createTable | createIndex | createTypeStatement // | alterTableStatement
+    createPassThruComment | createKeyspace | createTable | createIndex | createTypeStatement // | alterTableStatement
 
 
   def parseSchema(input: String): ParseResult[Seq[DataDefinition]] =

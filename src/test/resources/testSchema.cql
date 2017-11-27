@@ -344,6 +344,8 @@ CREATE TABLE system.transferred_ranges (
     AND read_repair_chance = 0.0
     AND speculative_retry = '99PERCENTILE';
 
+//! ' passthru link
+
 CREATE TABLE system.hints (
     target_id uuid,
     hint_id timeuuid,
@@ -366,3 +368,6 @@ CREATE TABLE system.hints (
     AND min_index_interval = 128
     AND read_repair_chance = 0.0
     AND speculative_retry = '99PERCENTILE';
+
+//! ' passthru link 1
+//! ' passthru link 2

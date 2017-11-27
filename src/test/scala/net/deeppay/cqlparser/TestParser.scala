@@ -8,7 +8,7 @@ import java.io.StringWriter
 import net.deeppay.cqlAST2puml.CQL2Puml
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers._
-import troy.cql.ast.DataDefinition
+import troy.cql.ast.{DataDefinition, PassThruComment}
 
 
 
@@ -34,7 +34,12 @@ class CreateTableSpec extends FlatSpec {
   "A schema" should "result in many statments" in {
     val result = CQLSchemaParser.parseSchema("CREATE TABLE mykeyspace.mytable ( hello TEXT PRIMARY KEY);\nCREATE TABLE mykeyspace.mytable ( hello TEXT PRIMARY KEY);")
     result shouldBe a [CQLSchemaParser.Success[_]]
-
+  }
+  "A passthru comment" should "pass" in {
+    val result = CQLSchemaParser.parseSchema(
+      "CREATE TABLE mykeyspace.mytable ( hello TEXT PRIMARY KEY);\n//! 'pass thru\n")
+    result shouldBe a [CQLSchemaParser.Success[_]]
+    result.get.toArray.apply(1) shouldBe a [PassThruComment]
   }
 
   val lines :String = scala.io.Source.fromURL(getClass.getResource("/testSchema.cql")).mkString

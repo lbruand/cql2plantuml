@@ -4,9 +4,12 @@ import troy.cql.ast.dml._
 import troy.cql.ast.ddl._
 
 sealed trait Cql3Statement
+
+
 sealed trait DataDefinition extends Cql3Statement
 sealed trait DataManipulation extends Cql3Statement
 
+final case class PassThruComment(comment : String) extends DataDefinition
 final case class DeleteStatement(
   simpleSelection: Seq[SimpleSelection],
   from: TableName,

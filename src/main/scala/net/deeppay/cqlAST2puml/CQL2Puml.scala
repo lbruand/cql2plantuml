@@ -84,6 +84,11 @@ class CQL2Puml {
     out.write("}\n\n")
   }
 
+  def output(comment: PassThruComment, out: Writer): Unit = {
+    out.write(comment.comment)
+    out.write("\n")
+  }
+
   def output(seq : Seq[DataDefinition], out : Writer): Unit = {
     out.write("""
       |@startuml
@@ -115,6 +120,7 @@ class CQL2Puml {
          case k: CreateKeyspace => output(k, out)
          case i: CreateIndex => output(i, out)
          case t: CreateType => output(t, out)
+         case comment : PassThruComment => output(comment, out)
          case _ => //nothing
      })//output(_, out))
 
