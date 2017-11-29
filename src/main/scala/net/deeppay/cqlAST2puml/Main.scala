@@ -21,6 +21,13 @@ import net.deeppay.cqlparser.CQLSchemaParser
 import troy.cql.ast.DataDefinition
 
 object Main extends App {
+  def autoClose[A <: AutoCloseable,B](closeable: A)(fun: (A) ⇒ B): B = {
+    try {
+      fun(closeable)
+    } finally {
+      closeable.close()
+    }
+  }
   override def main(args: Array[String]) {
 
     // TODO use scopt here.
@@ -37,18 +44,23 @@ object Main extends App {
           inputFilename + ".puml"
         }
       }
-      print(s" $inputFilename $outputFilename\n")
+      println(s" $inputFilename $outputFilename\n")
       val source = scala.io.Source.fromFile(inputFilename)
       val input  = source.mkString
       val result: CQLSchemaParser.ParseResult[Seq[DataDefinition]] = CQLSchemaParser.parseSchema(input)
 
       val cQL2Puml = new CQL2Puml()
-      val writer = new FileWriter(new File(outputFilename))//new StringWriter()
-      val tuple = result match {
-        case CQLSchemaParser.Success(seq, _) => seq
-      }
-      cQL2Puml.output(tuple, writer)
-      writer.close()
+      autoClose(new FileWriter(new File(outputFilename))) (writer =>{//new StringWriter()
+        result match {
+          case CQLSchemaParser.Success(seq, _) => {
+            cQL2Puml.output(seq, writer)
+          }
+          case _ => {
+            println("Error while parsing: " + result)
+          }
+        }
+      })
+
     }
   }
 
