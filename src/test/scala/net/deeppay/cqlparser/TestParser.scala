@@ -56,11 +56,19 @@ class CreateTableSpec extends FlatSpec {
 
     val cQL2Puml = new CQL2Puml()
     val writer = new StringWriter()
-    val tuple = result match {
-      case CQLSchemaParser.Success(seq, _) => seq
+    result match {
+      case CQLSchemaParser.Success(seq, _) => {
+        cQL2Puml.output(seq, writer)
+        val resultingFile = writer.toString
+        print(resultingFile)
+        assert(resultingFile.contains("' passthru link"))
+        assert(resultingFile.contains("' passthru link 1"))
+        assert(resultingFile.contains("' passthru link 2"))
+      }
+      case _ => fail(" error while parsing = " + result)
     }
-    cQL2Puml.output(tuple, writer)
-    print(writer.toString)
+
+
   }
 
 }
