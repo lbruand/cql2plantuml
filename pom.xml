@@ -17,6 +17,11 @@
             <version>2.12.4</version>
         </dependency>
         <dependency>
+            <groupId>net.sourceforge.plantuml</groupId>
+            <artifactId>plantuml</artifactId>
+            <version>8059</version>
+        </dependency>
+        <dependency>
             <groupId>org.scala-lang.modules</groupId>
             <artifactId>scala-parser-combinators_2.12</artifactId>
             <version>1.0.6</version>
