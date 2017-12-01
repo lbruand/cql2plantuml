@@ -92,7 +92,7 @@
                     <!-- MainClass in mainfest make a executable jar -->
                     <archive>
                         <manifest>
-                            <mainClass>net.deeppay.Main</mainClass>
+                            <mainClass>net.deeppay.cqlAST2puml.Main</mainClass>
                         </manifest>
                     </archive>
 
