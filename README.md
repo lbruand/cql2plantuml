@@ -53,7 +53,7 @@ You can use cql2plantuml as a maven plugin :
             <plugin>
                 <groupId>cql2plantuml</groupId>
                 <artifactId>cql2plantuml</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.1</version>
                 <executions>
                     <execution>
                         <phase>compile</phase>
