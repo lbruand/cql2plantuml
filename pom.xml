@@ -5,7 +5,7 @@
     <artifactId>cql2plantuml</artifactId>
     <packaging>maven-plugin</packaging>
     <description>cql2plantuml</description>
-    <version>1.1</version>
+    <version>1.2-SNAPSHOT</version>
     <name>cql2plantuml</name>
     <organization>
         <name>cql2plantuml</name>
