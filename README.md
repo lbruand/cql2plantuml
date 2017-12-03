@@ -23,13 +23,13 @@ Download a jar file from [release](https://github.com/lbruand/cql2plantuml/relea
 
 get a CQL schema from C* keyspace _test_ :
 
-```
+```bash
 cqlsh -e 'describe keyspace test;' > test.cql
 ```
 
 run the jar file using :
 
-```
+```bash
 java -jar cql2plantuml-1.1-jar-with-dependencies.jar test.cql
 ```
 
@@ -38,9 +38,42 @@ This .puml file does not contain any link.
 You can edit it to add links.
 You can then run [plantuml](http://plantuml.com/) to obtain a .png or .svg file:
 
-```
+```bash
 plantuml -Tpng test.puml
 plantuml -Tsvg test.puml
+```
+Maven plugin
+============
+
+You can use cql2plantuml as a maven plugin : 
+
+```maven
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>cql2plantuml</groupId>
+                <artifactId>cql2plantuml</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>touch</goal>
+                        </goals>
+                        <configuration>
+                            <format>svg</format>
+                            <outputPuml>true</outputPuml>
+                            <sourceFiles>
+                                <directory>src/main/resources</directory>
+                                <includes><include>**/*.cql</include>
+                                </includes>
+                            </sourceFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 ```
 
 
