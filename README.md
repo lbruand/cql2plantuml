@@ -47,7 +47,7 @@ Maven plugin
 
 You can use cql2plantuml as a maven plugin : 
 
-```Maven POM
+```xml
     <build>
         <plugins>
             <plugin>
