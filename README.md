@@ -30,7 +30,7 @@ cqlsh -e 'describe keyspace test;' > test.cql
 run the jar file using :
 
 ```
-java -jar cql2plantuml-assembly-1.0.jar test.cql
+java -jar cql2plantuml-1.1-jar-with-dependencies.jar test.cql
 ```
 
 This creates a *test.puml* file from your input *test.cql* file.
@@ -48,6 +48,8 @@ Derivative work warning
 =======================
 
 This work includes classes (CQL AST Parser) originally written by Tamer AbdulRadi distributed under the Apache Licence 2.0 at (https://github.com/schemasafe/troy). These classes were then modified.
+
+This work includes classes originally written by Julien Eluard distributed under the Apache Licence 2.0 at (https://github.com/jeluard/maven-plantuml-plugin). These classes were then modified.
 
 
 
