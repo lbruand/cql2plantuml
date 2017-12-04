@@ -247,6 +247,8 @@ public class CQL2PlantUMLMojo
                     CQL2Puml cql2Puml = new CQL2Puml();
                     if (seqParseResult.successful()) {
                         cql2Puml.output(seqParseResult.get(), stringWriter);
+                    } else {
+                        getLog().error("parse not successful for file [" + file.getName() + "]: " + seqParseResult);
                     }
                     String puml = stringWriter.toString();
                     if (outputPuml) {
