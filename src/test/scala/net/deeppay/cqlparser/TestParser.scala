@@ -35,6 +35,12 @@ class CreateTableSpec extends FlatSpec {
     val result = CQLSchemaParser.parseSchema("CREATE TABLE mykeyspace.mytable ( hello TEXT PRIMARY KEY);\nCREATE TABLE mykeyspace.mytable ( hello TEXT PRIMARY KEY);")
     result shouldBe a [CQLSchemaParser.Success[_]]
   }
+
+  "A schema" should " be able to contain a USE keyword" in {
+    val result = CQLSchemaParser.parseSchema("USE mykeyspace;\nCREATE TABLE mytable ( hello TEXT PRIMARY KEY);\nCREATE TABLE mykeyspace.mytable ( hello TEXT PRIMARY KEY);")
+    result shouldBe a [CQLSchemaParser.Success[_]]
+  }
+
   "A passthru comment" should "pass" in {
     val result = CQLSchemaParser.parseSchema(
       "CREATE TABLE mykeyspace.mytable ( hello TEXT PRIMARY KEY);\n//! 'pass thru\n")

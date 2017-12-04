@@ -359,8 +359,13 @@ object CQLSchemaParser extends JavaTokenParsers with Helpers {
       using ^^^^ CreateIndex.apply
   }
 
+  def useKeyspace: Parser[UseStatement] = {
+    "USE".i ~>
+      keyspaceName ^^ UseStatement.apply // TODO: with properties   // <create-keyspace-stmt> ::= CREATE KEYSPACE (IF NOT EXISTS)? <identifier> WITH <properties>
+  }
+
   def dataDefinition: Parser[DataDefinition] =
-    createPassThruComment | createKeyspace | createTable | createIndex | createTypeStatement // | alterTableStatement
+    createPassThruComment |useKeyspace | createKeyspace | createTable | createIndex | createTypeStatement // | alterTableStatement
 
 
   def parseSchema(input: String): ParseResult[Seq[DataDefinition]] =
