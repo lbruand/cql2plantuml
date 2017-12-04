@@ -76,6 +76,7 @@ You can use cql2plantuml as a maven plugin :
     </build>
 ```
 
+NB : Because cql2plantuml uses plantuml, you need to install graphviz on the machine.
 
 Derivative work warning
 =======================
