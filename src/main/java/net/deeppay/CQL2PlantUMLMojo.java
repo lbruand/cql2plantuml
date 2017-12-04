@@ -241,53 +241,61 @@ public class CQL2PlantUMLMojo
                     getLog().info("cqlfile : ["+file.getName()+"]");
                     StringWriter stringWriter = new StringWriter();
                     BufferedSource bufferedSource = null;
-                    bufferedSource = Source.fromFile(file, "UTF-8");
-                    String cql = bufferedSource.mkString();
-                    Parsers.ParseResult<Seq<DataDefinition>> seqParseResult = CQLSchemaParser.parseSchema(cql);
-                    CQL2Puml cql2Puml = new CQL2Puml();
-                    if (seqParseResult.successful()) {
-                        cql2Puml.output(seqParseResult.get(), stringWriter);
-                    } else {
-                        getLog().error("parse not successful for file [" + file.getName() + "]: " + seqParseResult);
-                    }
-                    String puml = stringWriter.toString();
-                    if (outputPuml) {
-                        String fileName = file.getName();
-                        String replacement = ".puml";
-                        String pumlFilename = fileName.replaceAll("\\.\\w+$", replacement);
-                        if (pumlFilename.equals(fileName)) {
-                            pumlFilename = fileName + replacement;
-                        }
-                        File targetFile = new File(outDir, pumlFilename);
-                        FileWriter fileWriter = null;
-                        try {
-                            fileWriter = new FileWriter(targetFile);
-                            fileWriter.write(puml);
-                        } finally {
-                            try {
-                                fileWriter.close();
-                            } catch (IOException e) {
-                                getLog().info("IOException on close", e);
-                            }
-                        }
-                    }
-                    SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), puml, this.option.getCharset(), this.option.getConfig());
-                    String newName = fileFormatOption.getFileFormat().changeName(file.getName(), 0);
-                    File targetFile = new File(outDir, newName);
-                    FileOutputStream fileOutputStream = null;
+                    String cqlInput = null;
                     try {
-                        fileOutputStream = new FileOutputStream(targetFile);
-                        String result = sourceStringReader.generateImage(fileOutputStream, fileFormatOption);
-                        getLog().debug(" result =["+result+"]");
+                        bufferedSource = Source.fromFile(file, "UTF-8");
+                        cqlInput = bufferedSource.mkString();
                     } finally {
-                        if (fileOutputStream != null) {
+                        if (bufferedSource != null) {
+                            bufferedSource.close();
+                        }
+                    }
+                    Parsers.ParseResult<Seq<DataDefinition>> seqParseResult = CQLSchemaParser.parseSchema(cqlInput);
+                    if (!seqParseResult.successful()) {
+                        getLog().error("parse not successful for file [" + file.getName() + "] : " + seqParseResult);
+                    } else {
+                        CQL2Puml cql2Puml = new CQL2Puml();
+                        cql2Puml.output(seqParseResult.get(), stringWriter);
+                        String puml = stringWriter.toString();
+                        if (outputPuml) {
+                            String fileName = file.getName();
+                            String replacement = ".puml";
+                            String pumlFilename = fileName.replaceAll("\\.\\w+$", replacement);
+                            if (pumlFilename.equals(fileName)) {
+                                pumlFilename = fileName + replacement;
+                            }
+                            File targetFile = new File(outDir, pumlFilename);
+                            FileWriter fileWriter = null;
                             try {
-                                fileOutputStream.close();
-                            } catch (IOException e) {
-                                getLog().info("IOException on close", e);
+                                fileWriter = new FileWriter(targetFile);
+                                fileWriter.write(puml);
+                            } finally {
+                                try {
+                                    fileWriter.close();
+                                } catch (IOException e) {
+                                    getLog().info("IOException on close", e);
+                                }
+                            }
+                        }
+                        SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), puml, this.option.getCharset(), this.option.getConfig());
+                        String newName = fileFormatOption.getFileFormat().changeName(file.getName(), 0);
+                        File targetFile = new File(outDir, newName);
+                        FileOutputStream fileOutputStream = null;
+                        try {
+                            fileOutputStream = new FileOutputStream(targetFile);
+                            String result = sourceStringReader.generateImage(fileOutputStream, fileFormatOption);
+                            getLog().debug(" result =["+result+"]");
+                        } finally {
+                            if (fileOutputStream != null) {
+                                try {
+                                    fileOutputStream.close();
+                                } catch (IOException e) {
+                                    getLog().info("IOException on close", e);
+                                }
                             }
                         }
                     }
+
                 } else {
                     final SourceFileReader sourceFileReader =
                             new SourceFileReader(
