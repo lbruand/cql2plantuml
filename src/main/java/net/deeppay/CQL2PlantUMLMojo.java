@@ -239,8 +239,9 @@ public class CQL2PlantUMLMojo
                 List<GeneratedImage> generatedImages;
                 if (file.getName().endsWith(".cql")) {
                     getLog().info("cqlfile : ["+file.getName()+"]");
-                    StringWriter stringWriter = new StringWriter();
                     BufferedSource bufferedSource = null;
+
+                    // Read CQL file.
                     String cqlInput = null;
                     try {
                         bufferedSource = Source.fromFile(file, "UTF-8");
@@ -250,14 +251,17 @@ public class CQL2PlantUMLMojo
                             bufferedSource.close();
                         }
                     }
+
+                    // Parse CQL file
                     Parsers.ParseResult<Seq<DataDefinition>> seqParseResult = CQLSchemaParser.parseSchema(cqlInput);
                     if (!seqParseResult.successful()) {
                         getLog().error("parse not successful for file [" + file.getName() + "] : " + seqParseResult);
                     } else {
+                        // Transform CQL to PUML
                         CQL2Puml cql2Puml = new CQL2Puml();
+                        StringWriter stringWriter = new StringWriter();
                         cql2Puml.output(seqParseResult.get(), stringWriter);
-                        String puml = stringWriter.toString();
-                        if (outputPuml) {
+                        if (outputPuml) { // Write the PUML to disk ?
                             String fileName = file.getName();
                             String replacement = ".puml";
                             String pumlFilename = fileName.replaceAll("\\.\\w+$", replacement);
@@ -268,7 +272,7 @@ public class CQL2PlantUMLMojo
                             FileWriter fileWriter = null;
                             try {
                                 fileWriter = new FileWriter(targetFile);
-                                fileWriter.write(puml);
+                                fileWriter.write(stringWriter.toString());
                             } finally {
                                 try {
                                     fileWriter.close();
@@ -277,7 +281,7 @@ public class CQL2PlantUMLMojo
                                 }
                             }
                         }
-                        SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), puml, this.option.getCharset(), this.option.getConfig());
+                        SourceStringReader sourceStringReader = new SourceStringReader(new Defines(), stringWriter.toString(), this.option.getCharset(), this.option.getConfig());
                         String newName = fileFormatOption.getFileFormat().changeName(file.getName(), 0);
                         File targetFile = new File(outDir, newName);
                         FileOutputStream fileOutputStream = null;
