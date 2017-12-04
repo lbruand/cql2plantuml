@@ -361,7 +361,7 @@ object CQLSchemaParser extends JavaTokenParsers with Helpers {
 
   def useKeyspace: Parser[UseStatement] = {
     "USE".i ~>
-      keyspaceName ^^ UseStatement.apply // TODO: with properties   // <create-keyspace-stmt> ::= CREATE KEYSPACE (IF NOT EXISTS)? <identifier> WITH <properties>
+      keyspaceName ^^ UseStatement.apply
   }
 
   def dataDefinition: Parser[DataDefinition] =
